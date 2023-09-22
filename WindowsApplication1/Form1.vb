@@ -3,32 +3,31 @@ Imports System.Windows.Input
 Imports System.Management
 Imports System.IO
 Imports Microsoft.VisualBasic.Devices
+Imports System.Threading
 
 
 Public Class Form1
 
-    Private Sub Form1_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load 
+    Private Sub Form1_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         ' Assuming you have a setting named "MyStringSetting"
         txt_LAN_MACAddress.Text = My.Settings.LAN_MACAddress
-        txt_WiFi_MACAddress.Text = My.Settings.WiFi_MACAddress 
+        txt_WiFi_MACAddress.Text = My.Settings.WiFi_MACAddress
 
         Timer1.Stop()
         Timer1.Start()
         ConnectToLANButton_Click(sender, e)
-
+        keyHook.Start()
     End Sub
-
+    Private Sub NotifyIcon1_MouseDoubleClick(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles NotifyIcon1.MouseDoubleClick
+        Me.Show()
+    End Sub
     Private WithEvents keyHook As New KeyboardHookX()
-    Private Sub keyHook_KeyDown(sender As Object, e As KeyEventArgs) Handles keyHook.KeyDown 
+    Private Sub keyHook_KeyDown(sender As Object, e As KeyEventArgs) Handles keyHook.KeyDown
         ' Check if the "A" key is pressed and the Ctrl key is pressed simultaneously
-        If e.KeyCode = Keys.A AndAlso (Control.ModifierKeys And Keys.Control) = Keys.Control AndAlso (Control.ModifierKeys And Keys.Shift) = Keys.Shift Then
-            ' Perform an action when the "A" key and Ctrl key are pressed simultaneously
-            'MessageBox.Show("Ctrl + A key combination is pressed.")
-            'If ConnectToLANButton.Enabled = True Then 
-            '    ConnectToWifiButton_Click(sender, e)
-            'Else
-            '    ConnectToLANButton_Click(sender, e)
-            'End If
+        If e.KeyCode = Keys.Z AndAlso (Control.ModifierKeys And Keys.Control) = Keys.Control AndAlso (Control.ModifierKeys And Keys.Shift) = Keys.Shift Then 
+            NotifyIcon1_MouseDoubleClick(sender, New MouseEventArgs(MouseButtons.Left, 2, 0, 0, 0))
+        ElseIf e.KeyCode = Keys.X AndAlso (Control.ModifierKeys And Keys.Control) = Keys.Control AndAlso (Control.ModifierKeys And Keys.Shift) = Keys.Shift Then
+            Me.Close()
         End If
     End Sub
     Protected Overrides Sub OnFormClosing(e As FormClosingEventArgs)
@@ -73,23 +72,24 @@ Public Class Form1
         End If
     End Sub
 
-
-
-    Private Sub ConnectToWifiButton_Click(sender As Object, e As EventArgs) Handles ConnectToWifiButton.Click 
+    Private Sub ConnectToWifiButton_Click(sender As Object, e As EventArgs) Handles ConnectToWifiButton.Click
         ' Assuming you have a setting named "MyStringSetting"
         My.Settings.LAN_MACAddress = txt_LAN_MACAddress.Text
         My.Settings.WiFi_MACAddress = txt_WiFi_MACAddress.Text
         My.Settings.Save() ' Save the settings to the application configuration file 
 
-        ' Disconnect LAN
-        DisconnectLAN()
-        'ConnectWiFi()
-        ' Connect to Wi-Fi (replace "YourSSID" and "YourPassword" with your Wi-Fi details)
+        DisconnectAdapter("Ethernet")
+        ConnectToAdapter("WiFi")
 
+        'Disconnect LAN
+        'DisconnectLAN()
+        'ConnectWiFi()
+        'Connect to Wi-Fi (replace "YourSSID" and "YourPassword" with your Wi-Fi details) 
 
         'ConnectToAdapter(txt_WiFi_MACAddress.Text)
         'DisconnectAdapter(txt_LAN_MACAddress.Text)
-
+        ' Sleep for 5 seconds (5000 milliseconds)
+        Thread.Sleep(3000)
         ConnectToWiFi("Alucon-TestServer", "AB00B00683")
         ConnectToLANButton.Enabled = True
         ConnectToWifiButton.Enabled = False
@@ -102,14 +102,17 @@ Public Class Form1
         My.Settings.WiFi_MACAddress = txt_WiFi_MACAddress.Text
         My.Settings.Save() ' Save the settings to the application configuration file 
 
-        ConnectToAdapter(txt_LAN_MACAddress.Text)
-        DisconnectAdapter(txt_WiFi_MACAddress.Text)
 
+        ConnectToAdapter("Ethernet")
+        DisconnectAdapter("WiFi")
+
+        'ConnectToAdapter(txt_LAN_MACAddress.Text)
+        'DisconnectAdapter(txt_WiFi_MACAddress.Text) 
         ' Disconnect Wi-Fi
-        DisconnectWiFi()
-        Disconnect_WiFi()
+        'DisconnectWiFi()
+        'Disconnect_WiFi()
         ' Connect to LAN
-        ConnectToLAN()
+        'ConnectToLAN()
         ConnectToLANButton.Enabled = False
         ConnectToWifiButton.Enabled = True
     End Sub
@@ -176,7 +179,7 @@ Public Class Form1
 
     Private Sub Button3_Click(sender As System.Object, e As System.EventArgs) Handles Button3.Click
         ' Create a DataTable to store network adapter information
-        Dim networkAdapterTable As New DataTable() 
+        Dim networkAdapterTable As New DataTable()
         networkAdapterTable.Columns.Add("DeviceID")
         networkAdapterTable.Columns.Add("NetConnectionId")
         networkAdapterTable.Columns.Add("Name")
@@ -187,7 +190,7 @@ Public Class Form1
 
 
         ' Query network adapter information using WMI
-        Dim query As New SelectQuery("SELECT * FROM Win32_NetworkAdapter")
+        Dim query As New SelectQuery("SELECT * FROM Win32_NetworkAdapter WHERE NetConnectionId != NULL ")
         Dim searcher As New ManagementObjectSearcher(query)
 
         For Each networkAdapter As ManagementObject In searcher.Get()
@@ -209,4 +212,20 @@ Public Class Form1
         DataGridView1.DataSource = networkAdapterTable
     End Sub
 
+    Private Sub Form1_FormClosing(sender As System.Object, e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
+        ' Show a notification when the icon is clicked
+
+        If e.CloseReason = CloseReason.UserClosing Then
+            ' The form was closed by the user (e.g., by clicking the close button)
+            ' Perform your action here, e.g., disposing of the NotifyIcon 
+            'NotifyIcon1.ShowBalloonTip(0, "Notification", "LAN And Wifi Switch is Running", ToolTipIcon.Info)
+            Me.Hide()
+            e.Cancel = True ' This cancels the form closing.
+        Else
+            ' The form was closed programmatically (e.g., by calling Me.Close() in code)
+            ' You may handle this case differently or not perform any specific action
+        End If
+    End Sub
+
+    
 End Class

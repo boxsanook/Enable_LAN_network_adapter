@@ -12,6 +12,17 @@ Public Class KeyboardHookX
 
     Public Shared Event KeyDown As KeyEventHandler
     Public Shared Event KeyUp As KeyEventHandler
+    ' Start the keyboard hook
+    Public Sub Start()
+        hookID = SetWindowsHookEx(WH_KEYBOARD_LL, hookDelegate, IntPtr.Zero, 0)
+    End Sub
+
+    ' Stop the keyboard hook
+    Public Sub [Stop]()
+        If hookID <> IntPtr.Zero Then
+            UnhookWindowsHookEx(hookID)
+        End If
+    End Sub
 
     Public Sub New()
         hookID = SetHook(hookDelegate)
