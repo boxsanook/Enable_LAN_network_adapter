@@ -1,0 +1,19 @@
+C:\Users\anulak\AppData\Local\Temporary Projects\WindowsApplication1\obj\x86\Debug\WindowsApplication1.Form1.resources
+C:\Users\anulak\AppData\Local\Temporary Projects\WindowsApplication1\obj\x86\Debug\WindowsApplication1.Resources.resources
+C:\Users\anulak\AppData\Local\Temporary Projects\WindowsApplication1\obj\x86\Debug\WindowsApplication1.vbproj.GenerateResource.Cache
+C:\Users\anulak\AppData\Local\Temporary Projects\WindowsApplication1\bin\Debug\WindowsApplication1.exe
+C:\Users\anulak\AppData\Local\Temporary Projects\WindowsApplication1\bin\Debug\WindowsApplication1.pdb
+C:\Users\anulak\AppData\Local\Temporary Projects\WindowsApplication1\bin\Debug\WindowsApplication1.xml
+C:\Users\anulak\AppData\Local\Temporary Projects\WindowsApplication1\obj\x86\Debug\WindowsApplication1.exe
+C:\Users\anulak\AppData\Local\Temporary Projects\WindowsApplication1\obj\x86\Debug\WindowsApplication1.xml
+C:\Users\anulak\AppData\Local\Temporary Projects\WindowsApplication1\obj\x86\Debug\WindowsApplication1.pdb
+C:\Users\anulak\Documents\Visual Studio 2010\Projects\WindowsApplication1\WindowsApplication1\obj\x86\Debug\WindowsApplication1.Form1.resources
+C:\Users\anulak\Documents\Visual Studio 2010\Projects\WindowsApplication1\WindowsApplication1\obj\x86\Debug\WindowsApplication1.Resources.resources
+C:\Users\anulak\Documents\Visual Studio 2010\Projects\WindowsApplication1\WindowsApplication1\obj\x86\Debug\WindowsApplication1.vbproj.GenerateResource.Cache
+C:\Users\anulak\Documents\Visual Studio 2010\Projects\WindowsApplication1\WindowsApplication1\bin\Debug\LAN And Wifi Switch.exe
+C:\Users\anulak\Documents\Visual Studio 2010\Projects\WindowsApplication1\WindowsApplication1\bin\Debug\LAN And Wifi Switch.pdb
+C:\Users\anulak\Documents\Visual Studio 2010\Projects\WindowsApplication1\WindowsApplication1\bin\Debug\LAN And Wifi Switch.xml
+C:\Users\anulak\Documents\Visual Studio 2010\Projects\WindowsApplication1\WindowsApplication1\obj\x86\Debug\LAN And Wifi Switch.exe
+C:\Users\anulak\Documents\Visual Studio 2010\Projects\WindowsApplication1\WindowsApplication1\obj\x86\Debug\LAN And Wifi Switch.xml
+C:\Users\anulak\Documents\Visual Studio 2010\Projects\WindowsApplication1\WindowsApplication1\obj\x86\Debug\LAN And Wifi Switch.pdb
+C:\Users\anulak\Documents\Visual Studio 2010\Projects\WindowsApplication1\WindowsApplication1\bin\Debug\LAN And Wifi Switch.exe.config
